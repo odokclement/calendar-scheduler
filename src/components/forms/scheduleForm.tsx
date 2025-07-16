@@ -2,7 +2,7 @@
 
 import { DAYS_OF_WEEK_IN_ORDER } from "@/constants"
 import { timeToFloat } from "@/lib/utils"
-import { scheduleFormSchema } from "@/schema/schedule"
+import { scheduleFormSchema } from "@/schemas/schedule"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
