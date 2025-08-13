@@ -1,7 +1,7 @@
 // This React component, `MeetingForm`, is a client-side form built with `react-hook-form` and `zod` validation, allowing users to schedule a meeting by selecting a timezone, date, and time, and providing their name, email, and optional notes. It uses various custom UI components (like `Select`, `Calendar`, and `Popover`) for a smooth user experience. The form filters available meeting times (`validTimes`) based on the user's selected timezone and date, ensuring only valid options are shown. Upon submission, it sends the form data along with the `eventId` and `clerkUserId` to a backend function (`createMeeting`) to create the meeting, and handles any server-side errors by displaying them in the UI.
 
 "use client"
-import { meetingFormSchema } from "@/schema/meetings"
+import { meetingFormSchema } from "@/schemas/meeting"
 import { createMeeting } from "@/server/actions/meetings"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toZonedTime } from "date-fns-tz"
