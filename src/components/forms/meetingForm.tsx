@@ -21,7 +21,7 @@ import { isSameDay } from "date-fns"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import Link from "next/link"
-import Booking from "../Booking"
+import Booking from "../booking"
 
  // Enables client-side rendering for this component
 
