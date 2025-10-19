@@ -54,27 +54,32 @@ export function ScheduleForm({
     fields: availabilityFields, // Current availability fields
   } = useFieldArray({ name: "availabilities", control: form.control })
 
-        // Group availability fields by day of the week for UI rendering
-    const groupedAvailabilityFields = Object.groupBy(
-        availabilityFields.map((field, index) => ({ ...field, index })),
-        availability => availability.dayOfWeek
-        )
+// Group availability fields by day of the week for UI rendering
+type GroupedAvailability = Record<string, (typeof availabilityFields)[number] & { index: number }[]>
+const groupedAvailabilityFields = availabilityFields
+    .map((field, index) => ({ ...field, index }))
+    .reduce((groups, availability) => {
+      const key = availability.dayOfWeek
+      if (!groups[key]) groups[key] = [] as unknown as GroupedAvailability[string]
+      groups[key].push(availability)
+      return groups
+    }, {} as GroupedAvailability)
 
-            // Submit handler to save schedule
-            async function onSubmit(values: z.infer<typeof scheduleFormSchema>) {
-                try {
-                await saveSchedule(values)
-                toast("Schedule saved successfully.", {
-                    duration: 5000,
-                    className: '!rounded-3xl !py-8 !px-5 !justify-center !text-green-400 !font-black',
-                })
-                } catch (error: any) {
-                // Handle any unexpected errors that occur during the schedule saving process
-                form.setError("root", {
-                    message: `There was an error saving your schedule${error.message}`,
-                })
-                }
-            }
+  // Submit handler to save schedule
+  async function onSubmit(values: z.infer<typeof scheduleFormSchema>) {
+    try {
+      await saveSchedule(values)
+      toast("Schedule saved successfully.", {
+        duration: 5000,
+        className:
+          '!rounded-3xl !py-8 !px-5 !justify-center !text-green-400 !font-black',
+      })
+    } catch (error: any) {
+      form.setError("root", {
+        message: `There was an error saving your schedule: ${error.message}`,
+      })
+    }
+  }
 
         
 
@@ -148,7 +153,7 @@ export function ScheduleForm({
                     {/* Render availability entries for this day */}
                         {groupedAvailabilityFields[dayOfWeek]?.map(
                             (field, labelIndex) => (
-                            <div className="flex flex-col gap-1" key={field.id}>
+                            <div className="flex flex-col gap-1" key={`${(field as any).id ?? field.index}`}>
                                 <div className="flex gap-2 items-center">
                                 {/* Start time input */}
                                 <FormField

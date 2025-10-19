@@ -89,7 +89,7 @@ export default function EventForm({
   return (
     <Form {...form}>
       <form
-        // onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex gap-6 flex-col"
       >
         {/* Show root error if any */}

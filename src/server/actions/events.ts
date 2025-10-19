@@ -1,11 +1,12 @@
 'use server' // Marks this file as a Server Action - required for Next.js App Router
 
-import { db } from "@/drizzle/db"; // Import the database instance from the Drizzle ORM setup
+import { db } from "@/drizzle/db";
 import { EventTable } from "@/drizzle/schema";
-import { eventFormSchema } from "@/schemas/events"; // Import the Zod schema for event validation
+import { eventFormSchema } from "@/schemas/events";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 

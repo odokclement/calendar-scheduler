@@ -59,7 +59,7 @@ type PublicProfileProps = {
       }
 
     return (
-        <div className="max-w-5xl mx-auto p-5">
+        <div className="max-w-5xl mx-auto mt-20 p-5">
 
                 {user?.id === userId && (
                 // Info message with Eye icon (for profile owner only)

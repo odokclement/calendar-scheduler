@@ -8,6 +8,13 @@
       "when": 1751445776070,
       "tag": "0000_square_tomorrow_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760828399789,
+      "tag": "0001_easy_wolfsbane",
+      "breakpoints": true
     }
   ]
 }
