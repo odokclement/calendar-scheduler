@@ -61,7 +61,7 @@ export default async function BookingPage({
 
   // Render the booking form with the list of valid available times
   return (
-    <Card className="max-w-4xl mx-auto border-8 border-blue-200 shadow-2xl shadow-accent-foreground">
+    <Card className="max-w-4xl mt-20 mx-auto border-8 border-blue-200 shadow-2xl shadow-accent-foreground">
       <CardHeader>
         <CardTitle>
           Book {event.name} with {calendarUser.fullName}

@@ -232,7 +232,7 @@ export default function MeetingForm({
                       <FormItem className="flex-1">
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input {...field} className="border-black" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -244,10 +244,10 @@ export default function MeetingForm({
                     control={form.control}
                     name="guestEmail"
                     render={({ field }) => (
-                      <FormItem className="flex-1">
+                      <FormItem className="flex-1 ">
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
-                          <Input type="email" {...field} />
+                          <Input type="email" {...field} className="border-black" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -263,7 +263,7 @@ export default function MeetingForm({
                     <FormItem>
                       <FormLabel>Notes</FormLabel>
                       <FormControl>
-                        <Textarea className="resize-none" {...field} />
+                        <Textarea className="resize-none border-black" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

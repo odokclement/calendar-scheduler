@@ -132,10 +132,14 @@ export async function getValidTimesFromSchedule(
   // If no schedule is found, return an empty list (user has no availabilities)
   if (schedule == null) return [];
 
-  // Group availabilities by day of the week (e.g., Monday, Tuesday)
-  const groupedAvailabilities = Object.groupBy(
-    schedule.availabilities,
-    (a) => a.dayOfWeek
+  // Group availabilities by day of the week (compatible version)
+  const groupedAvailabilities = schedule.availabilities.reduce(
+    (acc: Record<string, typeof schedule.availabilities>, a) => {
+      if (!acc[a.dayOfWeek]) acc[a.dayOfWeek] = [];
+      acc[a.dayOfWeek].push(a);
+      return acc;
+    },
+    {}
   );
 
   // Fetch all existing Google Calendar events between start and end
@@ -176,6 +180,7 @@ export async function getValidTimesFromSchedule(
   });
 }
 
+
 function getAvailabilities(
   groupedAvailabilities: Partial<
     Record<
@@ -188,13 +193,13 @@ function getAvailabilities(
 ): { start: Date; end: Date }[] {
   // Determine the day of the week based on the given date
   const dayOfWeek = (() => {
-    if (isMonday(date)) return "monday";
-    if (isTuesday(date)) return "tuesday";
-    if (isWednesday(date)) return "wednesday";
-    if (isThursday(date)) return "thursday";
-    if (isFriday(date)) return "friday";
-    if (isSaturday(date)) return "saturday";
-    if (isSunday(date)) return "sunday";
+    if (isMonday(date)) return "Monday";
+    if (isTuesday(date)) return "Tuesday";
+    if (isWednesday(date)) return "Wednesday";
+    if (isThursday(date)) return "Thursday";
+    if (isFriday(date)) return "Friday";
+    if (isSaturday(date)) return "Saturday";
+    if (isSunday(date)) return "Sunday";
     return null; // If the date doesn't match any day (highly unlikely), return null
   })();
 
