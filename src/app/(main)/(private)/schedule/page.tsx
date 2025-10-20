@@ -4,6 +4,7 @@ import { ScheduleForm } from "@/components/forms/scheduleForm"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getSchedule } from "@/server/actions/schedule"
 import { auth } from "@clerk/nextjs/server"
+import { revalidatePath } from "next/cache"
 
 
 // Default export function for the SchedulePage component
@@ -15,25 +16,13 @@ export default async function SchedulePage() {
   // Query the database to fetch the user's schedule based on the authenticated user
   const schedule = await getSchedule(userId)
 
-  // Convert startTime and endTime from Date to string for each availability
-  const normalizedSchedule = schedule
-    ? {
-        ...schedule,
-        availabilities: schedule.availabilities.map(a => ({
-          ...a,
-          startTime: a.startTime instanceof Date ? a.startTime.toISOString() : a.startTime,
-          endTime: a.endTime instanceof Date ? a.endTime.toISOString() : a.endTime,
-        })),
-      }
-    : undefined
-
     return (
             <Card className="max-w-md mx-auto mt-20 border-8 border-blue-200 shadow-2xl shadow-accent-foreground">
                 <CardHeader>
                     <CardTitle>Schedule</CardTitle> {/* Display title for the page */}
                 </CardHeader>
                 <CardContent>
-                    <ScheduleForm schedule={normalizedSchedule} /> 
+                    <ScheduleForm schedule={schedule} /> 
                     {/* Render the ScheduleForm component with the fetched schedule */}
                 </CardContent>
             </Card>
