@@ -1,5 +1,5 @@
 {
-  "id": "cfd0a3b6-ded6-4d97-b95f-3ad1d8018235",
+  "id": "ef66ab07-53fb-4a51-94bf-e6c39c68b994",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -27,14 +27,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "duration_in_minutes": {
-          "name": "duration_in_minutes",
+        "durationInMinutes": {
+          "name": "durationInMinutes",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "clerk_user_id": {
-          "name": "clerk_user_id",
+        "clerkUserId": {
+          "name": "clerkUserId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -43,7 +43,7 @@
           "name": "isActive",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": true
         },
         "createdAt": {
@@ -62,11 +62,11 @@
         }
       },
       "indexes": {
-        "clerkUserId": {
-          "name": "clerkUserId",
+        "clerkUserIdIndex": {
+          "name": "clerkUserIdIndex",
           "columns": [
             {
-              "expression": "clerk_user_id",
+              "expression": "clerkUserId",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -85,8 +85,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.scheduleAvailability": {
-      "name": "scheduleAvailability",
+    "public.scheduleAvailabilities": {
+      "name": "scheduleAvailabilities",
       "schema": "",
       "columns": {
         "id": {
@@ -102,43 +102,29 @@
           "primaryKey": false,
           "notNull": true
         },
+        "startTime": {
+          "name": "startTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endTime": {
+          "name": "endTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "dayOfWeek": {
           "name": "dayOfWeek",
           "type": "day",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
-        },
-        "startTime": {
-          "name": "startTime",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endTime": {
-          "name": "endTime",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
         }
       },
       "indexes": {
-        "scheduleId": {
-          "name": "scheduleId",
+        "scheduleIdIndex": {
+          "name": "scheduleIdIndex",
           "columns": [
             {
               "expression": "scheduleId",
@@ -154,9 +140,9 @@
         }
       },
       "foreignKeys": {
-        "scheduleAvailability_scheduleId_schedules_id_fk": {
-          "name": "scheduleAvailability_scheduleId_schedules_id_fk",
-          "tableFrom": "scheduleAvailability",
+        "scheduleAvailabilities_scheduleId_schedules_id_fk": {
+          "name": "scheduleAvailabilities_scheduleId_schedules_id_fk",
+          "tableFrom": "scheduleAvailabilities",
           "tableTo": "schedules",
           "columnsFrom": [
             "scheduleId"
@@ -185,14 +171,14 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "clerkUserId": {
-          "name": "clerkUserId",
+        "timezone": {
+          "name": "timezone",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "timezone": {
-          "name": "timezone",
+        "clerkUserId": {
+          "name": "clerkUserId",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -215,7 +201,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "schedules_clerkUserId_unique": {
+          "name": "schedules_clerkUserId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "clerkUserId"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
